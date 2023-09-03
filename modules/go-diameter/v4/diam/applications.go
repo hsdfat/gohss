@@ -14,6 +14,7 @@ const (
 	CHARGING_CONTROL_APP_ID    = 4
 	TGPP_APP_ID                = 4
 	CX_APP_ID                  = 16777216
+	SH_APP_ID                  = 16777217
 	GX_CHARGING_CONTROL_APP_ID = 16777238
 	TGPP_S6A_APP_ID            = 16777251
 	TGPP_SWX_APP_ID            = 16777265

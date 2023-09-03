@@ -758,4 +758,23 @@ const (
 	UARFlags                                   = 637
 	UserAuthorizationType                      = 623
 	UserDataAlreadyAvailable                   = 624
+	ASNumber                                   = 722
+	CallReferenceInfo                          = 720
+	CallReferenceNumber                        = 721
+	CurrentLocation                            = 707
+	DSAITag                                    = 711
+	DataReference                              = 703
+	ExpiryTime                                 = 709
+	IdentitySet                                = 708
+	LocalTimeZoneIndication                    = 718
+	OneTimeNotification                        = 712
+	PrepagingSupported                         = 717
+	SendDataIndication                         = 710
+	SequenceNumber                             = 716
+	ServiceIndication                          = 704
+	ServingNodeIndication                      = 714
+	SubsReqType                                = 705
+	UDRFlags                                   = 719
+	UserData_Sh                                = 702
+	UserIdentity                               = 700
 )

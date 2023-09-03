@@ -27,6 +27,12 @@ const (
 	SessionTermination        = 275
 	SpendingLimit             = 8388635
 	UpdateLocation            = 316
+	LocationInfo              = 302
+	PushNotification          = 309
+	SubscribeNotifications    = 308
+	UserAuthorization         = 300
+	UserData                  = 306
+	ProfileUpdate             = 307
 )
 
 // Short Command Names

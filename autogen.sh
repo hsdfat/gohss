@@ -27,7 +27,7 @@ if [ -z "$SORT_FLAG_IGNORE_CASE" ]; then
 	fi
 fi
 
-dict=cx.xml
+dict=*.xml
 
 ## Generate commands.go
 src=commands.go

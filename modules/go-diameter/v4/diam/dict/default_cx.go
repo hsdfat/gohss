@@ -203,11 +203,6 @@ var cxXML = `<?xml version="1.0" encoding="UTF-8"?>
             <data type="UTF8String" />
         </avp>
 
-        <avp name="TGPP-AAA-Server-Name" code="318" must="M,V" may-encrypt="N" vendor-id="10415">
-            <!-- 3GPP TS 29.234 Section 10.1.34 -->
-            <data type="UTF8String"/>
-        </avp>
-
         <avp name="Service-Selection" code="493" must="M" may="P" must-not="V" may-encrypt="Y" vendor-id="0">
             <!-- http://www.qtc.jp/3GPP/Specs/29273-920.pdf Section 5.2.3.5 -->
             <data type="UTF8String"/>
@@ -294,12 +289,18 @@ var cxXML = `<?xml version="1.0" encoding="UTF-8"?>
 				<rule avp="Acct-Application-Id" required="true" max="1"/>
 			</data>
 		</avp>
-        <avp name="Public-Identity" code="601" must="M,V" may="P" may-encrypt="Y" vendor-id="10415">
-            <data type="UTF8String"/>
-        </avp>
         <avp name="Visited-Network-Identifier" code="600" must="M,V" may="P" may-encrypt="Y" vendor-id="10415">
             <data type="OctetString"/>
         </avp>
+        <avp name="Public-Identity" code="601" must="M,V" may="P" may-encrypt="Y" vendor-id="10415">
+            <data type="UTF8String"/>
+        </avp>
+
+        <avp name="Server-Name" code="602" must="M,V" may-encrypt="N" vendor-id="10415">
+            <!-- 3GPP TS 29.234 Section 10.1.34 -->
+            <data type="UTF8String"/>
+        </avp>
+
 
         <avp name="User-Authorization-Type" code="623"  must="M,V" may="P" may-encrypt="Y" vendor-id="10415">
             <data type="Enumerated">
