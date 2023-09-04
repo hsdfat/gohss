@@ -1,6 +1,7 @@
 package cxdx
 
 import (
+	"fmt"
 	"gohss/hss_models"
 	"gohss/messages"
 
@@ -14,6 +15,36 @@ func NewSAA(
 	msg *diam.Message,
 ) (*diam.Message, error) {
 	var saa SAA
+	var sar SAR
+	if err := msg.Unmarshal(sar); err != nil {
+		return msg.Answer(diam.UnableToComply), fmt.Errorf("AIR Unmarshal failed for message: %v failed: %v", msg, err)
+	}
+
+	if sar.UserName != "" {
+		// TODO: Checking if the username exists
+	}
+
+	// Gen username
+	imsi := ""
+	domain := ""
+
+	// TODO: Get ims subscribers details
+
+	// TODO: gen userdata
+
+	// TODO: Gen respone username
+	saa.UserName = datatype.UTF8String(fmt.Sprintf("%s@%s", imsi, domain))
+	// TODO: Gen charging information
+	saa.ChargingInformation = &ChargingInformation{
+		PrimaryEventChargingFunctionName: "123",
+	}
+	// TODO: Get server assign type
+	ServerAssignType := 1
+	if ServerAssignType == 1 || ServerAssignType == 2 {
+		// Update serving CSCF from originHost
+	} else {
+		// Clear S-CSCF 
+	}
 
 	return NewSuccessfulSAA(srv, msg, &saa), nil
 }
