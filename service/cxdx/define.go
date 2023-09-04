@@ -100,6 +100,7 @@ type SAA struct {
 	SCSCFRestorationInfo *SCSCFRestorationInfo     `avp:"SCSCF-Restoration-Info,omitempty"`
 	ServerName           datatype.UTF8String       `avp:"Server-Name,omitempty"`
 	LooseRouteIndication *datatype.Enumerated      `avp:"Loose-Route-Indication,omitempty"`
+	ExperimentalResult   *ExperimentalResult       `avp:"Experimental-Result,omitempty"`
 	SupportedFeatures    []*SupportedFeatures      `avp:"Supported-Features,omitempty"`
 }
 
@@ -140,25 +141,26 @@ type LIA struct {
 	ServerName         datatype.UTF8String       `avp:"Server-Name,omitempty"`
 	ServerCapabilities *ServerCapabilities       `avp:"Server-Capabilities,omitempty"`
 	ResultCode         datatype.Unsigned32       `avp:"Result-Code,omitempty"`
+	ExperimentalResult *ExperimentalResult       `avp:"Experimental-Result,omitempty"`
 	SupportedFeatures  []*SupportedFeatures      `avp:"Supported-Features,omitempty"`
-	LIAFlags           []string                  `avp:"LIA-Flags,omitempty"`
+	LIAFlags           datatype.Unsigned32       `avp:"LIA-Flags,omitempty"`
 }
 
 type MAR struct {
-	SessionID                datatype.UTF8String       `avp:"Session-Id,omitempty"`
-	OriginHost               datatype.DiameterIdentity `avp:"Origin-Host,omitempty"`
-	OriginRealm              datatype.DiameterIdentity `avp:"Origin-Realm,omitempty"`
-	AuthSessionState         *datatype.Enumerated      `avp:"Auth-Session-State,omitempty"`
-	DestinationHost          datatype.DiameterIdentity `avp:"Destination-Host,omitempty"`
-	DestinationRealm         datatype.DiameterIdentity `avp:"Destination-Realm,omitempty"`
-	UserName                 datatype.UTF8String       `avp:"User-Name,omitempty"`
-	PublicIdentity           datatype.UTF8String       `avp:"Public-Identity,omitempty"`
-	RATType                  *datatype.Enumerated      `avp:"RAT-Type,omitempty"`
-	VisitedNetworkIdentifier *datatype.Enumerated      `avp:"Visited-Network-Identifier,omitempty"`
-	ServerName               datatype.UTF8String       `avp:"Server-Name,omitempty"`
-	SIPAuthDataItem          SIPAuthDataItem           `avp:"SIP-Auth-Data-Item,omitempty"`
-	SIPNumberAuthItems       datatype.UTF8String       `avp:"SIP-Number-Auth-Items,omitempty"`
-	SupportedFeatures        []*SupportedFeatures      `avp:"Supported-Features,omitempty"`
+	SessionID        datatype.UTF8String       `avp:"Session-Id,omitempty"`
+	OriginHost       datatype.DiameterIdentity `avp:"Origin-Host,omitempty"`
+	OriginRealm      datatype.DiameterIdentity `avp:"Origin-Realm,omitempty"`
+	AuthSessionState *datatype.Enumerated      `avp:"Auth-Session-State,omitempty"`
+	DestinationHost  datatype.DiameterIdentity `avp:"Destination-Host,omitempty"`
+	DestinationRealm datatype.DiameterIdentity `avp:"Destination-Realm,omitempty"`
+	UserName         datatype.UTF8String       `avp:"User-Name,omitempty"`
+	PublicIdentity   datatype.UTF8String       `avp:"Public-Identity,omitempty"`
+	// RATType                  *datatype.Enumerated      `avp:"RAT-Type,omitempty"`
+	VisitedNetworkIdentifier *datatype.Enumerated `avp:"Visited-Network-Identifier,omitempty"`
+	ServerName               datatype.UTF8String  `avp:"Server-Name,omitempty"`
+	SIPAuthDataItem          *SIPAuthDataItem     `avp:"SIP-Auth-Data-Item,omitempty"`
+	SIPNumberAuthItems       datatype.Unsigned32  `avp:"SIP-Number-Auth-Items,omitempty"`
+	SupportedFeatures        []*SupportedFeatures `avp:"Supported-Features,omitempty"`
 }
 
 type MAA struct {
@@ -173,7 +175,7 @@ type MAA struct {
 	RATType                  *datatype.Enumerated      `avp:"RAT-Type,omitempty"`
 	VisitedNetworkIdentifier *datatype.Enumerated      `avp:"Visited-Network-Identifier,omitempty"`
 	ServerName               datatype.UTF8String       `avp:"Server-Name,omitempty"`
-	SIPAuthDataItem          *SIPAuthDataItem          `avp:"SIP-Auth-Data-Item,omitempty"`
+	SIPAuthDataItem          []*SIPAuthDataItem        `avp:"SIP-Auth-Data-Item,omitempty"`
 	SIPNumberAuthItems       datatype.Unsigned32       `avp:"SIP-Number-Auth-Items,omitempty"`
 	SupportedFeatures        []*SupportedFeatures      `avp:"Supported-Features,omitempty"`
 }

@@ -161,6 +161,93 @@ func GenerateLteAuthVector(
 	return vector, sqn + 1, err
 }
 
+// GenerateSIPAuthVectors generates at most `numVectors` lte auth vectors.
+// Inputs:
+//   - numVectors  -- The maximum number of vectors to generate
+//   - milenage    -- The cipher to use to generate the vector
+//   - subscriber  -- The subscriber data for the subscriber we want to generate auth vectors for
+//   - authSqnInd  -- the IND of the current vector being generated
+//
+// Returns:
+//   - The E-UTRAN vectors,  the next value to set the subscriber's SIPAuthNextSeq to (or an error)
+func GenerateSIPAuthVectors(
+	numSIPVectors uint32,
+	mcipher *milenage.Cipher,
+	subscriber *models.AuthenticationSubscription,
+	lteAuthOp []byte,
+	authSqnInd uint64) ([]*milenage.SIPAuthVector, uint64, error) {
+
+	if numSIPVectors > maxReturnedVectors {
+		numSIPVectors = maxReturnedVectors
+	}
+	var vectors = make([]*milenage.SIPAuthVector, 0, numSIPVectors)
+	lteAuthNextSeq, err := hexToInt(subscriber.SequenceNumber, 12)
+	if err != nil {
+		return nil, 0, err
+	}
+	for i := uint32(0); i < numSIPVectors; i++ {
+		vector, nextSeq, err := GenerateSIPAuthVector(mcipher, subscriber, lteAuthOp, authSqnInd)
+		if err != nil {
+			// If we have already generated an auth vector successfully, then we can
+			// return it. Otherwise, we must signal an error.
+			// See 3GPP TS 29.272 section 5.2.3.1.3.
+			if i == 0 {
+				return nil, 0, err
+			}
+			glog.Errorf("failed to generate lte auth vector: %v", err)
+			break
+		}
+		vectors = append(vectors, vector)
+		lteAuthNextSeq = nextSeq
+		subscriber.SequenceNumber = IntToHexFixedLength(lteAuthNextSeq, 12)
+	}
+	
+
+	return vectors, lteAuthNextSeq, nil
+}
+
+// GenerateSIPAuthVector returns the sip auth vector for the subscriber.
+// Inputs:
+//   - milenage    -- The cipher to use to generate the vector
+//   - subscriber  -- The subscriber data for the subscriber we want to generate auth vectors for
+//   - authSqnInd  -- the IND of the current vector being generated
+//
+// Returns:
+//   - A SIP vector and the next value to set the subscriber's LteAuthNextSeq to (or an error).
+func GenerateSIPAuthVector(
+	mcipher *milenage.Cipher,
+	subs *models.AuthenticationSubscription,
+	lteAuthOp []byte,
+	authSqnInd uint64) (*milenage.SIPAuthVector, uint64, error) {
+
+	// if err := ValidateLteSubscription(subs); err != nil {
+	// 	return nil, 0, messages.NewAuthRejectedError(err.Error())
+	// }
+	// if subs.State == nil {
+	// 	return nil, 0, message.NewAuthRejectedError("Subscriber data missing subscriber state")
+	// }
+	sqn, err := hexToInt(subs.SequenceNumber, 12)
+	if err != nil {
+		return nil, 0, messages.NewAuthRejectedError(err.Error())
+	}
+
+	key, err := hex.DecodeString(subs.PermanentKey.PermanentKeyValue)
+	if err != nil {
+		return nil, 0, messages.NewAuthRejectedError(err.Error())
+	}
+
+	opc, err := GetOrGenerateOpc(subs, key, lteAuthOp)
+	if err != nil {
+		return nil, 0, err
+	}
+
+	vector, err := mcipher.GenerateSIPAuthVector(key, opc, sqn)
+	if err != nil {
+		return vector, 0, messages.NewAuthRejectedError(err.Error())
+	}
+	return vector, sqn + 1, err
+}
+
 // GenerateUtranAuthVector returns the lte auth vector for the subscriber.
 // Inputs:
 //   - milenage    -- The cipher to use to generate the vector

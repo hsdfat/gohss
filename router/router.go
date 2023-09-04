@@ -3,6 +3,7 @@ package router
 import (
 	hss_models "gohss/hss_models"
 	"gohss/messages"
+	"gohss/service/cxdx"
 	"gohss/service/s6a"
 
 	"gohss/modules/go-diameter/v4/diam"
@@ -17,6 +18,7 @@ func InitRouter(srv *hss_models.HomeSubscriberServer, stateMachine *sm.StateMach
 	// stateMachine.HandleFunc(diam.AIR) // default handler
 	stateMachine.HandleFunc(diam.AIR, messages.HandleMessage(srv, s6a.NewAIA))
 	stateMachine.HandleFunc(diam.ULR, messages.HandleMessage(srv, s6a.NewULA))
+	stateMachine.HandleFunc(diam.MAR, messages.HandleMessage(srv, cxdx.NewMAA))
 	// mux.GetMux().Handle(diam.MAR, srv.handleMessage(NewMAA))
 	// mux.GetMux().Handle(diam.SAR, srv.handleMessage(NewSAA))
 	// mux.GetMux().HandleIdx(
