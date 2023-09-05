@@ -67,7 +67,7 @@ func (m *Message) Marshal(src interface{}) error {
 	if err != nil {
 		return err
 	}
-	m.AVP = avps
+	m.AVP = append(m.AVP, avps...)
 	m.Header.MessageLength = uint32(m.Len())
 	return nil
 }

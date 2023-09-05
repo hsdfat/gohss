@@ -7,7 +7,6 @@ import (
 	"strings"
 
 	"gohss/modules/go-diameter/v4/diam"
-	"gohss/modules/go-diameter/v4/diam/avp"
 	"gohss/modules/go-diameter/v4/diam/datatype"
 )
 
@@ -39,7 +38,7 @@ func NewUAA(
 		// This is Derigister
 		// TODO: Update Serving S-CSCF address to empty
 
-		return NewSuccessfulUAA(srv, msg, &uaa), nil
+		return NewSuccessfulUAA(srv, uar.SessionID, msg, &uaa), nil
 	}
 	// Checking existing S-CSCF
 	if true {
@@ -61,7 +60,7 @@ func NewUAA(
 		}
 	}
 
-	return NewSuccessfulUAA(srv, msg, &uaa), nil
+	return NewSuccessfulUAA(srv, uar.SessionID, msg, &uaa), nil
 }
 
 // NewSuccessfulAIA outputs a successful authentication information answer (AIA) to reply to an
@@ -69,19 +68,13 @@ func NewUAA(
 // and adds the authentication vectors.
 func NewSuccessfulUAA(
 	srv *hss_models.HomeSubscriberServer,
+	sessionID datatype.UTF8String,
 	msg *diam.Message,
 	uaa *UAA,
 ) *diam.Message {
 	// vendorID := srv.GetVendorID()
-	// answer := messages.ConstructSuccessAnswer(msg, sessionID, srv.Config.Server, diam.TGPP_S6A_APP_ID)
-	answer := msg.Answer(2001)
+	answer := messages.ConstructSuccessAnswer(msg, sessionID, srv.Config.Server, diam.TGPP_S6A_APP_ID)
 	answer.Marshal(uaa)
-	answer.NewAVP(avp.VendorSpecificApplicationID, avp.Mbit, 0, &diam.GroupedAVP{
-		AVP: []*diam.AVP{
-			diam.NewAVP(avp.VendorID, avp.Mbit, 0, datatype.Unsigned32(srv.GetVendorID())),
-			diam.NewAVP(avp.AuthApplicationID, avp.Mbit, 0, datatype.Unsigned32(diam.TGPP_S6A_APP_ID)),
-		},
-	})
-	answer.NewAVP(avp.AuthSessionState, avp.Mbit, 0, datatype.Enumerated(messages.AuthSessionState_NO_STATE_MAINTAINED))
+
 	return answer
 }

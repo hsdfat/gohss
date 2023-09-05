@@ -201,7 +201,6 @@ func GenerateSIPAuthVectors(
 		lteAuthNextSeq = nextSeq
 		subscriber.SequenceNumber = IntToHexFixedLength(lteAuthNextSeq, 12)
 	}
-	
 
 	return vectors, lteAuthNextSeq, nil
 }
@@ -327,7 +326,7 @@ func ResyncLteAuthSeq(subs *models.AuthenticationSubscription, resyncInfo, lteAu
 		return 0, messages.NewAuthRejectedError("Invalid resync authentication code")
 	}
 
-	return GetNextLteAuthSqnAfterResync(subs, sqnMs)
+	return sqnMs, nil
 }
 
 // GetNextLteAuthSqnAfterResync returns the value of the next sequence number after

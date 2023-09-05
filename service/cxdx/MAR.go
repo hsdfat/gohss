@@ -8,7 +8,6 @@ import (
 	"strings"
 
 	"gohss/modules/go-diameter/v4/diam"
-	"gohss/modules/go-diameter/v4/diam/avp"
 	"gohss/modules/go-diameter/v4/diam/datatype"
 
 	"github.com/omec-project/openapi/models"
@@ -86,7 +85,7 @@ func NewMAA(
 		}
 
 	}
-	return NewSuccessfulMAA(srv, msg, &maa), nil
+	return NewSuccessfulMAA(srv, mar.SessionID, msg, &maa), nil
 }
 
 func setAuthNextSeq(id string, srv *hss_models.HomeSubscriberServer, subs *models.AuthenticationSubscription, lteAuthNextSeq uint64) error {
@@ -99,19 +98,13 @@ func setAuthNextSeq(id string, srv *hss_models.HomeSubscriberServer, subs *model
 // and adds the authentication vectors.
 func NewSuccessfulMAA(
 	srv *hss_models.HomeSubscriberServer,
+	sessionID datatype.UTF8String,
 	msg *diam.Message,
 	maa *MAA,
 ) *diam.Message {
 	// vendorID := srv.GetVendorID()
-	// answer := messages.ConstructSuccessAnswer(msg, sessionID, srv.Config.Server, diam.TGPP_S6A_APP_ID)
-	answer := msg.Answer(2001)
+	answer := messages.ConstructSuccessAnswer(msg, sessionID, srv.Config.Server, diam.TGPP_S6A_APP_ID)
 	answer.Marshal(maa)
-	answer.NewAVP(avp.VendorSpecificApplicationID, avp.Mbit, 0, &diam.GroupedAVP{
-		AVP: []*diam.AVP{
-			diam.NewAVP(avp.VendorID, avp.Mbit, 0, datatype.Unsigned32(srv.GetVendorID())),
-			diam.NewAVP(avp.AuthApplicationID, avp.Mbit, 0, datatype.Unsigned32(diam.TGPP_S6A_APP_ID)),
-		},
-	})
-	answer.NewAVP(avp.AuthSessionState, avp.Mbit, 0, datatype.Enumerated(messages.AuthSessionState_NO_STATE_MAINTAINED))
+
 	return answer
 }
