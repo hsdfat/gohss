@@ -59,7 +59,7 @@ type SAR struct {
 	UserDataAlreadyAvailable       *datatype.Enumerated      `avp:"User-Data-Already-Available,omitempty"`
 	SCSCFRestorationInfo           *SCSCFRestorationInfo     `avp:"SCSCF-Restoration-Info,omitempty"`
 	MultipleRegistrationIndication *datatype.Enumerated      `avp:"Multiple-Registration-Indication,omitempty"`
-	SARFlag                        datatype.Unsigned32       `avp:"SAR-Flag,omitempty"`
+	SARFlag                        datatype.Unsigned32       `avp:"SAR-Flags,omitempty"`
 	VisitedNetworkIdentifier       datatype.OctetString      `avp:"Visited-Network-Identifier,omitempty"`
 	SupportedFeatures              []*SupportedFeatures      `avp:"Supported-Features,omitempty"`
 }
@@ -105,8 +105,8 @@ type SAA struct {
 }
 
 type ChargingInformation struct {
-	PrimaryEventChargingFunctionName        datatype.DiameterURI `avp:"Primary-Event-Charging-Function,omitempty"`
-	SecondaryEventChargingFunctionName      datatype.DiameterURI `avp:"Secondary-Event-Charging-Function,omitempty"`
+	PrimaryEventChargingFunctionName        datatype.DiameterURI `avp:"Primary-Event-Charging-Function-Name,omitempty"`
+	SecondaryEventChargingFunctionName      datatype.DiameterURI `avp:"Secondary-Event-Charging-Function-Name,omitempty"`
 	PrimaryChargingCollectionFunctionName   datatype.DiameterURI `avp:"Primary-Charging-CollectionFunction-Name,omitempty"`
 	SecondaryChargingCollectionFunctionName datatype.DiameterURI `avp:"Secondary-Charging-CollectionFunction-Name,omitempty"`
 }

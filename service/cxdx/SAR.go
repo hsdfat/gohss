@@ -7,6 +7,8 @@ import (
 
 	"gohss/modules/go-diameter/v4/diam"
 	"gohss/modules/go-diameter/v4/diam/datatype"
+
+	"github.com/flosch/pongo2/v6"
 )
 
 func NewSAA(
@@ -15,8 +17,8 @@ func NewSAA(
 ) (*diam.Message, error) {
 	var saa SAA
 	var sar SAR
-	if err := msg.Unmarshal(sar); err != nil {
-		return msg.Answer(diam.UnableToComply), fmt.Errorf("AIR Unmarshal failed for message: %v failed: %v", msg, err)
+	if err := msg.Unmarshal(&sar); err != nil {
+		return msg.Answer(diam.UnableToComply), fmt.Errorf("SAR Unmarshal failed for message: %v failed: %v", msg, err)
 	}
 
 	if sar.UserName != "" {
@@ -44,8 +46,22 @@ func NewSAA(
 	} else {
 		// Clear S-CSCF
 	}
+	template := srv.Config.CxTemplate
+	if template != nil {
+		out, err := template.Execute(pongo2.Context{"iFC_vars": map[string]string{
+			"imsi": "1",
+			"mnc":  "452",
+			"mcc":  "04",
+		}})
+		if err != nil {
+			return messages.ConstructFailureAnswer(msg, sar.SessionID, srv.Config.Server, uint32(messages.ErrorCode_USER_UNKNOWN)), err
+		}
+		saa.UserData = datatype.OctetString(out)
+		// fmt.Println(out)
 
-	return NewSuccessfulSAA(srv, saa.SessionID, msg, &saa), nil
+	}
+
+	return NewSuccessfulSAA(srv, sar.SessionID, msg, &saa), nil
 }
 
 // NewSuccessfulAIA outputs a successful authentication information answer (AIA) to reply to an
@@ -67,6 +83,7 @@ func NewSuccessfulSAA(
 			FeatureList:   5,
 		},
 	}
+	// fmt.Println(saa.UserData)
 	answer.Marshal(saa)
 
 	return answer

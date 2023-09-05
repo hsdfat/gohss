@@ -19,6 +19,7 @@ func InitRouter(srv *hss_models.HomeSubscriberServer, stateMachine *sm.StateMach
 	stateMachine.HandleFunc(diam.AIR, messages.HandleMessage(srv, s6a.NewAIA))
 	stateMachine.HandleFunc(diam.ULR, messages.HandleMessage(srv, s6a.NewULA))
 	stateMachine.HandleFunc(diam.MAR, messages.HandleMessage(srv, cxdx.NewMAA))
+	stateMachine.HandleFunc(diam.SAR, messages.HandleMessage(srv, cxdx.NewSAA))
 	// mux.GetMux().Handle(diam.MAR, srv.handleMessage(NewMAA))
 	// mux.GetMux().Handle(diam.SAR, srv.handleMessage(NewSAA))
 	// mux.GetMux().HandleIdx(

@@ -420,15 +420,15 @@ var cxXML = `<?xml version="1.0" encoding="UTF-8"?>
 				<rule avp="Secondary-Charging-Collection-Function-Name" required="false" max="1"/>
             </data>
         </avp>
-        <avp name="Primary-Event-ChargingFunction-Name" code="619" must="M,V" may-encrypt="N" vendor-id="10415">
+        <avp name="Primary-Event-Charging-Function-Name" code="619" must="M,V" may-encrypt="N" vendor-id="10415">
             <!-- 3GPP TS 29.229 Section 6.3.14 -->
             <data type="DiameterURI"/>
         </avp>
-        <avp name="Secondary-Event-ChargingFunction-Name" code="620" must="M,V" may-encrypt="N" vendor-id="10415">
+        <avp name="Secondary-Event-Charging-Function-Name" code="620" must="M,V" may-encrypt="N" vendor-id="10415">
             <!-- 3GPP TS 29.229 Section 6.3.14 -->
             <data type="DiameterURI"/>
         </avp>
-        <avp name="Primary-Charging-CollectionFunction-Name" code="621" must="M,V" may-encrypt="N" vendor-id="10415">
+        <avp name="Primary-Charging-Collection-Function-Name" code="621" must="M,V" may-encrypt="N" vendor-id="10415">
             <!-- 3GPP TS 29.229 Section 6.3.14 -->
             <data type="DiameterURI"/>
         </avp>

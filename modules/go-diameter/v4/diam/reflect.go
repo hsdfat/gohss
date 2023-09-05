@@ -96,6 +96,7 @@ func marshalStruct(m *Message, field reflect.Value) (error, []*AVP) {
 		}
 
 		avpname, omitEmpty := parseAvpTag(bt.Tag)
+		// fmt.Println(avpname, omitEmpty)
 		if len(avpname) == 0 || (omitEmpty && isEmptyValue(f)) {
 			// TODO: check the required attribute in AVP rule?
 			continue
@@ -104,6 +105,7 @@ func marshalStruct(m *Message, field reflect.Value) (error, []*AVP) {
 		// Lookup the AVP name (tag) in the dictionary, the dictionary AVP has the code.
 		// Relies on the fact that in the same app will not be AVPs with same code but different vendorId
 		dictAVP, err = m.Dictionary().FindAVP(m.Header.ApplicationID, avpname)
+		// fmt.Println(avpname, dictAVP)
 		if err != nil {
 			return err, nil
 		}
