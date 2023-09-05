@@ -9,14 +9,16 @@
 
     <!-- This optional extension provides the Location of the serving MME for this subscriber and the TAC for the ULA -->
     <Extension>
-        <EPSLocationInformation>{% if Sh_template_vars['serving_mme'] is not none %}
+        <EPSLocationInformation>
+            {% if Sh_template_vars['serving_mme'] == nil %}
             <E-UTRANCellGlobalId></E-UTRANCellGlobalId>
             <TrackingAreaId></TrackingAreaId>
             <MMEName>{{ Sh_template_vars['serving_mme'] }}</MMEName>
             <AgeOfLocationInformation>0</AgeOfLocationInformation>
             <Extension>
                 <VisitedPLMNID></VisitedPLMNID>
-            </Extension>{% endif %}          
+            </Extension>
+            {% endif %}          
         </EPSLocationInformation>
     </Extension>
 

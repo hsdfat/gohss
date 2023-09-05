@@ -4,6 +4,7 @@ import (
 	"gohss/modules/go-diameter/v4/diam/sm"
 
 	"github.com/emakeev/milenage"
+	"github.com/flosch/pongo2/v6"
 )
 
 type HomeSubscriberServer struct {
@@ -21,10 +22,12 @@ type HomeSubscriberServer struct {
 }
 
 type HSSConfig struct {
-	Name    string
-	Server  *DiameterConfig
-	AuthOp  []byte
-	AuthAmf []byte
+	Name       string
+	Server     *DiameterConfig
+	AuthOp     []byte
+	AuthAmf    []byte
+	CxTemplate *pongo2.Template
+	ShTemplate *pongo2.Template
 }
 
 func (srv *HomeSubscriberServer) GetVendorID() uint32 {

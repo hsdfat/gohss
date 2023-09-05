@@ -8,7 +8,8 @@ import (
 	"github.com/flosch/pongo2/v6"
 )
 
-var tplExample = pongo2.Must(pongo2.FromFile("default_ifc.xml"))
+var CxTemplate = pongo2.Must(pongo2.FromFile("default_ifc.xml"))
+var ShTemplate = pongo2.Must(pongo2.FromFile("default_sh_user_data.xml"))
 
 func main() {
 	config := &hss_models.HSSConfig{
@@ -20,9 +21,11 @@ func main() {
 			DestRealm:    "hss",
 			Vendor3GPP:   10415,
 		},
-		AuthOp:  []byte{},
-		AuthAmf: []byte{0x80, 0x00},
-		Name:    "gohss",
+		AuthOp:     []byte{},
+		AuthAmf:    []byte{0x80, 0x00},
+		Name:       "gohss",
+		CxTemplate: CxTemplate,
+		ShTemplate: ShTemplate,
 	}
 	// store := models.SubscriberStore{}
 	db := &mongoDb.MongoDBClient{
