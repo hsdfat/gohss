@@ -73,7 +73,14 @@ func NewSuccessfulUAA(
 	uaa *UAA,
 ) *diam.Message {
 	// vendorID := srv.GetVendorID()
-	answer := messages.ConstructSuccessAnswer(msg, sessionID, srv.Config.Server, diam.TGPP_S6A_APP_ID)
+	answer := messages.ConstructSuccessAnswer(msg, sessionID, srv.Config.Server, diam.CX_APP_ID)
+	uaa.SupportedFeatures = []*SupportedFeatures{
+		{
+			VendorId:      srv.GetVendorID(),
+			FeatureListID: 1,
+			FeatureList:   5,
+		},
+	}
 	answer.Marshal(uaa)
 
 	return answer

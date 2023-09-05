@@ -69,7 +69,7 @@ func NewMAA(
 	if err == nil {
 		err = setAuthNextSeq(imsi, srv, subscriber, lteAuthNextSeq)
 		if len(vectors) > 0 {
-			count := 0
+			count := 1
 			maa.SIPAuthDataItem = []*SIPAuthDataItem{}
 			for _, v := range vectors {
 				authDataItem := &SIPAuthDataItem{}
@@ -85,6 +85,8 @@ func NewMAA(
 		}
 
 	}
+	maa.UserName = mar.UserName
+	maa.PublicIdentity = mar.PublicIdentity
 	return NewSuccessfulMAA(srv, mar.SessionID, msg, &maa), nil
 }
 
@@ -103,7 +105,7 @@ func NewSuccessfulMAA(
 	maa *MAA,
 ) *diam.Message {
 	// vendorID := srv.GetVendorID()
-	answer := messages.ConstructSuccessAnswer(msg, sessionID, srv.Config.Server, diam.TGPP_S6A_APP_ID)
+	answer := messages.ConstructSuccessAnswer(msg, sessionID, srv.Config.Server, diam.CX_APP_ID)
 	answer.Marshal(maa)
 
 	return answer

@@ -104,10 +104,16 @@ func NewULA(
 			}
 			ula.SubscriptionData.MSISDN = datatype.OctetString(messages.ConvertMSISDN(msisdn))
 		}
-
+		if ula.SubscriptionData == nil {
+			ula.SubscriptionData = &SubscriptionData{}
+		}
+		ula.SubscriptionData.AccessRestrictionData = messages.NewUint32(0)
+		ula.SubscriptionData.SubscriberStatus = messages.NewInt32(0)
+		ula.SubscriptionData.NetworkAccessMode = messages.NewInt32(0)
+		ula.SubscriptionData.SubscribedPeriodicRauTauTimer = messages.NewUint32(720)
 	}
 
-	return NewSuccessfulULA(srv, msg, &ula), nil
+	return NewSuccessfulULA(srv, ulr.SessionID, msg, &ula), nil
 }
 
 // NewSuccessfulAIA outputs a successful authentication information answer (AIA) to reply to an
@@ -115,12 +121,12 @@ func NewULA(
 // and adds the authentication vectors.
 func NewSuccessfulULA(
 	srv *hss_models.HomeSubscriberServer,
+	sessionID datatype.UTF8String,
 	msg *diam.Message,
 	ula *ULA,
 ) *diam.Message {
 	// vendorID := srv.GetVendorID()
-	// answer := messages.ConstructSuccessAnswer(msg, sessionID, srv.Config.Server, diam.TGPP_S6A_APP_ID)
-	answer := msg.Answer(2001)
+	answer := messages.ConstructSuccessAnswer(msg, sessionID, srv.Config.Server, diam.TGPP_S6A_APP_ID)
 	ula.ULAFlags = messages.NewUint32(1)
 	answer.Marshal(ula)
 	answer.NewAVP(avp.VendorSpecificApplicationID, avp.Mbit, 0, &diam.GroupedAVP{

@@ -55,12 +55,19 @@ func NewSuccessfulSAA(
 	srv *hss_models.HomeSubscriberServer,
 	sessionID datatype.UTF8String,
 	msg *diam.Message,
-	uaa *SAA,
+	saa *SAA,
 ) *diam.Message {
 	// vendorID := srv.GetVendorID()
-	answer := messages.ConstructSuccessAnswer(msg, sessionID, srv.Config.Server, diam.TGPP_S6A_APP_ID)
+	answer := messages.ConstructSuccessAnswer(msg, sessionID, srv.Config.Server, diam.CX_APP_ID)
 	// answer := msg.Answer(2001)
-	answer.Marshal(uaa)
+	saa.SupportedFeatures = []*SupportedFeatures{
+		{
+			VendorId:      srv.GetVendorID(),
+			FeatureListID: 1,
+			FeatureList:   5,
+		},
+	}
+	answer.Marshal(saa)
 
 	return answer
 }

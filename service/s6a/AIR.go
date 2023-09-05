@@ -112,7 +112,7 @@ func NewSuccessfulAIA(
 	for itemNumber, vector := range vectors {
 		evs = append(evs, diam.NewAVP(avp.EUTRANVector, avp.Mbit|avp.Vbit, vendorID, &diam.GroupedAVP{
 			AVP: []*diam.AVP{
-				diam.NewAVP(avp.ItemNumber, avp.Mbit|avp.Vbit, vendorID, datatype.Unsigned32(itemNumber)),
+				diam.NewAVP(avp.ItemNumber, avp.Mbit|avp.Vbit, vendorID, datatype.Unsigned32(itemNumber+1)),
 				diam.NewAVP(avp.RAND, avp.Mbit|avp.Vbit, vendorID, datatype.OctetString(vector.Rand[:])),
 				diam.NewAVP(avp.XRES, avp.Mbit|avp.Vbit, vendorID, datatype.OctetString(vector.Xres[:])),
 				diam.NewAVP(avp.AUTN, avp.Mbit|avp.Vbit, vendorID, datatype.OctetString(vector.Autn[:])),
@@ -123,7 +123,7 @@ func NewSuccessfulAIA(
 	for itemNumber, vector := range utranVectors {
 		evs = append(evs, diam.NewAVP(avp.UTRANVector, avp.Mbit|avp.Vbit, vendorID, &diam.GroupedAVP{
 			AVP: []*diam.AVP{
-				diam.NewAVP(avp.ItemNumber, avp.Mbit|avp.Vbit, vendorID, datatype.Unsigned32(itemNumber)),
+				diam.NewAVP(avp.ItemNumber, avp.Mbit|avp.Vbit, vendorID, datatype.Unsigned32(itemNumber+1)),
 				diam.NewAVP(avp.RAND, avp.Mbit|avp.Vbit, vendorID, datatype.OctetString(vector.Rand[:])),
 				diam.NewAVP(avp.XRES, avp.Mbit|avp.Vbit, vendorID, datatype.OctetString(vector.Xres[:])),
 				diam.NewAVP(avp.AUTN, avp.Mbit|avp.Vbit, vendorID, datatype.OctetString(vector.Autn[:])),

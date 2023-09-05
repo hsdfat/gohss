@@ -51,8 +51,15 @@ func NewSuccessfulLIA(
 	lia *LIA,
 ) *diam.Message {
 	// vendorID := srv.GetVendorID()
-	answer := messages.ConstructSuccessAnswer(msg, sessionID, srv.Config.Server, diam.TGPP_S6A_APP_ID)
+	answer := messages.ConstructSuccessAnswer(msg, sessionID, srv.Config.Server, diam.CX_APP_ID)
 	// answer := msg.Answer(2001)
+	lia.SupportedFeatures = []*SupportedFeatures{
+		{
+			VendorId:      srv.GetVendorID(),
+			FeatureListID: 1,
+			FeatureList:   5,
+		},
+	}
 	lia.LIAFlags = 1
 	answer.Marshal(lia)
 

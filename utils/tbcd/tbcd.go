@@ -21,7 +21,7 @@ var TbcdSymbolMap map[string]string = map[string]string{
 	"a": "c",
 	"b": "d",
 	"c": "e",
-	"f": "1111",
+	"f": "f",
 }
 
 var reverseTbcdSymbolMap map[string]string = map[string]string{
