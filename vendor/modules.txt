@@ -10,15 +10,9 @@ github.com/emakeev/milenage
 # github.com/evanphx/json-patch v4.9.0+incompatible
 ## explicit
 github.com/evanphx/json-patch
-# github.com/fiorix/go-diameter/v4 v4.0.4
-## explicit; go 1.13
-github.com/fiorix/go-diameter/v4/diam
-github.com/fiorix/go-diameter/v4/diam/avp
-github.com/fiorix/go-diameter/v4/diam/datatype
-github.com/fiorix/go-diameter/v4/diam/dict
-github.com/fiorix/go-diameter/v4/diam/sm
-github.com/fiorix/go-diameter/v4/diam/sm/smparser
-github.com/fiorix/go-diameter/v4/diam/sm/smpeer
+# github.com/flosch/pongo2/v6 v6.0.0
+## explicit; go 1.18
+github.com/flosch/pongo2/v6
 # github.com/gin-contrib/sse v0.1.0
 ## explicit; go 1.12
 github.com/gin-contrib/sse

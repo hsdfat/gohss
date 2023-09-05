@@ -4,7 +4,11 @@ import (
 	"gohss/hss_models"
 	"gohss/server"
 	"gohss/store/mongoDb"
+
+	"github.com/flosch/pongo2/v6"
 )
+
+var tplExample = pongo2.Must(pongo2.FromFile("default_ifc.xml"))
 
 func main() {
 	config := &hss_models.HSSConfig{

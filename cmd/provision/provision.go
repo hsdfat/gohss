@@ -26,6 +26,7 @@ var (
 	smPolicyData  models.SmPolicyData
 	servingPlmnId string
 	ueId          string
+	
 )
 
 func init() {

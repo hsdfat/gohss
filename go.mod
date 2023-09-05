@@ -4,11 +4,13 @@ go 1.18
 
 require (
 	github.com/emakeev/milenage v1.0.0
-	github.com/fiorix/go-diameter/v4 v4.0.4
+	github.com/flosch/pongo2/v6 v6.0.0
 	github.com/golang/glog v0.0.0-20160126235308-23def4e6c14b
+	github.com/ishidawataru/sctp v0.0.0-20190922091402-408ec287e38c
 	github.com/omec-project/MongoDBLibrary v1.1.0
 	github.com/omec-project/openapi v1.1.0
 	go.mongodb.org/mongo-driver v1.7.3
+	golang.org/x/net v0.0.0-20210805182204-aaa1db679c0d
 )
 
 require (
@@ -24,7 +26,6 @@ require (
 	github.com/golang-jwt/jwt v3.2.1+incompatible // indirect
 	github.com/golang/protobuf v1.4.3 // indirect
 	github.com/golang/snappy v0.0.1 // indirect
-	github.com/ishidawataru/sctp v0.0.0-20190922091402-408ec287e38c // indirect
 	github.com/json-iterator/go v1.1.10 // indirect
 	github.com/klauspost/compress v1.13.6 // indirect
 	github.com/leodido/go-urn v1.2.0 // indirect
@@ -42,7 +43,6 @@ require (
 	github.com/xdg-go/stringprep v1.0.2 // indirect
 	github.com/youmark/pkcs8 v0.0.0-20181117223130-1be2e3e5546d // indirect
 	golang.org/x/crypto v0.0.0-20201208171446-5f87f3452ae9 // indirect
-	golang.org/x/net v0.0.0-20210805182204-aaa1db679c0d // indirect
 	golang.org/x/sync v0.0.0-20200625203802-6e8e738ad208 // indirect
 	golang.org/x/sys v0.0.0-20210423082822-04245dca01da // indirect
 	golang.org/x/text v0.3.6 // indirect
