@@ -4,8 +4,9 @@ import (
 	"encoding/json"
 	"log"
 
+	"gohss/modules/models"
+
 	"github.com/omec-project/MongoDBLibrary"
-	"github.com/omec-project/openapi/models"
 	"go.mongodb.org/mongo-driver/bson"
 )
 
@@ -26,7 +27,6 @@ var (
 	smPolicyData  models.SmPolicyData
 	servingPlmnId string
 	ueId          string
-	
 )
 
 func init() {

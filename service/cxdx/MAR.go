@@ -10,7 +10,7 @@ import (
 	"gohss/modules/go-diameter/v4/diam"
 	"gohss/modules/go-diameter/v4/diam/datatype"
 
-	"github.com/omec-project/openapi/models"
+	"gohss/modules/models"
 )
 
 func NewMAA(

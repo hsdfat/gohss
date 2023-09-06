@@ -4,7 +4,8 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/omec-project/openapi/models"
+	"gohss/modules/models"
+
 	"go.mongodb.org/mongo-driver/bson"
 )
 

@@ -22,9 +22,10 @@ import (
 	// "gohss/message"
 	// "gohss/models"
 
+	"gohss/modules/models"
+
 	"github.com/emakeev/milenage"
 	"github.com/golang/glog"
-	"github.com/omec-project/openapi/models"
 )
 
 const (

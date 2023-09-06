@@ -1,6 +1,6 @@
 package hss_models
 
-import "github.com/omec-project/openapi/models"
+import "gohss/modules/models"
 
 type SubscriberStore interface {
 	Init() error

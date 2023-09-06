@@ -10,8 +10,9 @@ import (
 	"gohss/modules/go-diameter/v4/diam/avp"
 	"gohss/modules/go-diameter/v4/diam/datatype"
 
+	"gohss/modules/models"
+
 	"github.com/emakeev/milenage"
-	"github.com/omec-project/openapi/models"
 )
 
 func NewAIA(
