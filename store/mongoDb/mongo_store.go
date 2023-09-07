@@ -65,3 +65,102 @@ func (c *MongoDBClient) UpdateAuthenSubscriptionData(id string, subs *models.Aut
 
 	return c.PutOne(AuthenticationSubscriptionColName, filter, putData)
 }
+
+func (c *MongoDBClient) GetLTESubscriptionData(id string) (interface{}, error) {
+	filter := bson.M{"ueId": id}
+	result := c.GetOne(LTEsubscriptionColName, filter)
+	var subs interface{}
+	err := result.Decode(&subs)
+	if err != nil {
+		return nil, err
+	}
+	return subs, nil
+}
+
+func (c *MongoDBClient) GetSIPServerName(publicId string) (string, error) {
+	filter := bson.M{"publicId": publicId}
+	result := c.GetOne(PublicIdColName, filter)
+	var pubsubs models.PublicId
+	err := result.Decode(&pubsubs)
+	if err != nil {
+		return "", err
+	}
+	filter = bson.M{"privateId": pubsubs.PrivateId}
+	result = c.GetOne(PrivateIdColName, filter)
+	var prisubs models.PrivateId
+	err = result.Decode(&prisubs)
+	if err != nil {
+		return "", err
+	}
+	return prisubs.ServerName, nil
+}
+
+func (c *MongoDBClient) GetSIPImsi(publicId string) (string, error) {
+	filter := bson.M{"publicId": publicId}
+	result := c.GetOne(PublicIdColName, filter)
+	var pubsubs models.PublicId
+	err := result.Decode(&pubsubs)
+	if err != nil {
+		return "", err
+	}
+	filter = bson.M{"privateId": pubsubs.PrivateId}
+	result = c.GetOne(PrivateIdColName, filter)
+	var prisubs models.PrivateId
+	err = result.Decode(&prisubs)
+	if err != nil {
+		return "", err
+	}
+	return prisubs.UeId, nil
+}
+
+func (c *MongoDBClient) GetSIPPrivateId(publicId string) (string, error) {
+	filter := bson.M{"publicId": publicId}
+	result := c.GetOne(PublicIdColName, filter)
+	var pubsubs models.PublicId
+	err := result.Decode(&pubsubs)
+	if err != nil {
+		return "", err
+	}
+
+	return pubsubs.PrivateId, nil
+}
+
+func (c *MongoDBClient) UpdateSIPServerName(publicId string, serverName string) error {
+	filter := bson.M{"publicId": publicId}
+	fmt.Println(publicId)
+	result := c.GetOne(PublicIdColName, filter)
+	var pubsubs models.PublicId
+	err := result.Decode(&pubsubs)
+	if err != nil {
+		return err
+	}
+	filter = bson.M{"privateId": pubsubs.PrivateId}
+	subs := models.PrivateId{
+		ID:         pubsubs.PrivateId,
+		ServerName: serverName,
+	}
+	putData := toBsonM(subs)
+
+	return c.PutOne(PrivateIdColName, filter, putData)
+}
+
+func (c *MongoDBClient) GetSIPState(publicId string) (int, error) {
+	filter := bson.M{"publicId": publicId}
+	result := c.GetOne(PublicIdColName, filter)
+	var pubsubs models.PublicId
+	err := result.Decode(&pubsubs)
+	if err != nil {
+		return 0, err
+	}
+	return pubsubs.State, nil
+}
+
+func (c *MongoDBClient) UpdateSIPState(publicId string, state int) error {
+	filter := bson.M{"publicId": publicId}
+	subs := models.PublicId{
+		ID:    publicId,
+		State: state,
+	}
+	putData := toBsonM(subs)
+	return c.PutOne(PrivateIdColName, filter, putData)
+}

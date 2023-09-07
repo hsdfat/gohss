@@ -12,4 +12,18 @@ type SubscriberStore interface {
 	GetSMSubscriptionData(id string) (*models.SessionManagementSubscriptionData, error)
 
 	GetAMSubscriptionData(id string) (*models.AccessAndMobilitySubscriptionData, error)
+
+	GetLTESubscriptionData(id string) (interface{}, error)
+
+	GetSIPServerName(publicId string) (string, error)
+
+	GetSIPImsi(publicId string) (string, error)
+
+	GetSIPPrivateId(publicId string) (string, error)
+
+	UpdateSIPServerName(publicId string, servername string) error
+
+	GetSIPState(publicId string) (int, error)
+
+	UpdateSIPState(publicId string, state int) error
 }

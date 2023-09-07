@@ -5,6 +5,7 @@ import (
 	"log"
 
 	"gohss/modules/models"
+	"gohss/store/mongoDb"
 
 	"github.com/omec-project/MongoDBLibrary"
 	"go.mongodb.org/mongo-driver/bson"
@@ -12,10 +13,23 @@ import (
 
 func main() {
 	url := "mongodb://admin:123@localhost:27017/free5gc?authsource=admin"
+	privateId := "sip@452.04"
+	publicId := "sip@++452.04"
 	MongoDBLibrary.SetMongoDB("free5gc", url)
 	InsertAuthSubscriptionToMongoDB(ueId, authSubsData)
 	InsertAccessAndMobilitySubscriptionDataToMongoDB(ueId, amDataData, "45204")
 	InsertSessionManagementSubscriptionDataToMongoDB(ueId, "45204", smDataData)
+	insertPrivateId(privateId, models.PrivateId{
+		UeId:       ueId,
+		ID:         privateId,
+		ServerName: "1",
+	})
+
+	insertPublicId(publicId, models.PublicId{
+		ID:        publicId,
+		PrivateId: privateId,
+		State:     10,
+	})
 }
 
 var (
@@ -202,6 +216,20 @@ func init() {
 
 	servingPlmnId = "45204"
 	ueId = "imsi-452040000000022"
+}
+
+func insertPublicId(publicId string, subs models.PublicId) {
+	collName := mongoDb.PublicIdColName
+	filter := bson.M{"Id": publicId}
+	putData := toBsonM(subs)
+	MongoDBLibrary.RestfulAPIPutOne(collName, filter, putData)
+}
+
+func insertPrivateId(privateId string, subs models.PrivateId) {
+	collName := mongoDb.PrivateIdColName
+	filter := bson.M{"Id": privateId}
+	putData := toBsonM(subs)
+	MongoDBLibrary.RestfulAPIPutOne(collName, filter, putData)
 }
 
 func InsertAuthSubscriptionToMongoDB(ueId string, authSubs models.AuthenticationSubscription) {
